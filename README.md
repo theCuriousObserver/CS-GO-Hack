@@ -18,7 +18,7 @@ All of code has been made from cazz YouTube channel. The links for them are as f
 6. Triggerbot - https://www.youtube.com/watch?v=gzKVqeu5H28
 7. Cham - https://www.youtube.com/watch?v=vFHzoIlW7Zs
 
-The main.cpp file is different for all hacks which are provided in the github link - https://github.com/theCuriousObserver/CS-GO-Hack.git
+The main.cpp file is different for all hacks which are provided in the github link - https://github.com/theCuriousObserver/CS-GO-Hack.git.
 For all hacks we follow the following steps:-
 
 1. Create an empty project in Visual Studio. 
