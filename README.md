@@ -9,11 +9,11 @@ Our team 2 consists of 4 members:-
 3. Sruti Nallaparaju (sxn188@student.bham.ac.uk)
 4. Jite Yu (jxy133@student.bham.ac.uk)
 
-All of code has been made from cazz YouTube channel. The links for them are as follows:-
+The links for the code are as follows:-
 
 1. Aimbot - https://www.youtube.com/watch?v=Nl2PN7TvJZ4
 2. Glow and Bhop - https://www.youtube.com/watch?v=TEE05nVHm9A&t=471s
-3. Radar - https://www.youtube.com/watch?v=cezbHM9NL90
+3. Radar - https://www.youtube.com/watch?v=G3Sh1i6ccRM
 4. Recoil Control - https://www.youtube.com/watch?v=4TkBd6BiSwE
 5. Skin Change - https://www.youtube.com/watch?v=4OV5RtbhUhk
 6. Triggerbot - https://www.youtube.com/watch?v=gzKVqeu5H28
@@ -41,4 +41,4 @@ Resources :-
 Memory class is copied from the following website :- https://github.com/cazzwastaken/pro-bhop/blob/master/cheat/memory.h
 The offsets are copied from the following website :- https://github.com/frk1/hazedumper/blob/master/csgo.hpp
 
-All hacks work well with each other.
+All hacks work well with each other. If a hack doesn't work then you need to update the offset.

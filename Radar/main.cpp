@@ -1,39 +1,64 @@
-#include "memory.h"
-#include <thread>
+#include <Windows.h>
+#include <TlHelp32.h>
 
-namespace offsets
+#define dwEntityList 0x4DCEEAC
+#define m_bSpotted 0x93D
+
+DWORD dwPid;
+HANDLE hProcess;
+DWORD client;
+
+uintptr_t GetModule(const char *modName, DWORD procId)
 {
-	// client.dll
-	constexpr auto localPlayer = 0xDB35DC;
-	constexpr auto entityList = 0x4DCEEAC;
-
-	// entity
-	constexpr auto teamNum = 0xF4;
-	constexpr auto spotted = 0x93D;
+	HANDLE hSnap = CreateToolhelp32Snapshot(TH32CS_SNAPMODULE | TH32CS_SNAPMODULE32, procId);
+	if (hSnap != INVALID_HANDLE_VALUE)
+	{
+		MODULEENTRY32 modEntry;
+		modEntry.dwSize = sizeof(modEntry);
+		if (Module32First(hSnap, &modEntry))
+		{
+			do
+			{
+				if (!strcmp(modEntry.szModule, modName))
+				{
+					CloseHandle(hSnap);
+					return (uintptr_t)modEntry.modBaseAddr;
+				}
+			} while (Module32Next(hSnap, &modEntry));
+		}
+	}
 }
 
-int main()
+template <typename T>
+T RPM(SIZE_T address)
 {
-	const auto memory = Memory("csgo.exe");
-	const auto client = memory.GetModuleAddress("client.dll");
+	T buffer;
+	ReadProcessMemory(hProcess, (void *)address, &buffer, sizeof(T), nullptr);
+	return buffer;
+}
+
+template <typename T>
+void WPM(SIZE_T address, T buffer)
+{
+	WriteProcessMemory(hProcess, (void *)address, &buffer, sizeof(T), nullptr);
+}
+
+void main()
+{
+	GetWindowThreadProcessId(FindWindowA(0, "Counter-Strike: Global Offensive"), &dwPid);
+	hProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, dwPid);
+	client = GetModule("client.dll", dwPid);
 
 	while (true)
 	{
-
-		const auto localPlayer = memory.Read<std::uintptr_t>(client + offsets::localPlayer);
-		const auto localTeam = memory.Read<std::uintptr_t>(client + offsets::teamNum);
-
-		for (auto i = 1; i <= 64; ++i)
+		for (int i = 1; i < 64; i++)
 		{
-			const auto entity = memory.Read<std::uintptr_t>(client + offsets::entityList + i * 0x10);
-
-			if (memory.Read<std::uintptr_t>(entity + offsets::teamNum) == localTeam) // Checks if entity is in our team
-				continue;
-
-			memory.Write<bool>(entity + offsets::spotted, true);
+			DWORD dwCurrentEntity = RPM<DWORD>(client + dwEntityList + i * 0x10);
+			if (dwCurrentEntity)
+			{
+				WPM<bool>(dwCurrentEntity + m_bSpotted, true);
+			}
 		}
-
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		Sleep(50);
 	}
-	return 0;
 }
