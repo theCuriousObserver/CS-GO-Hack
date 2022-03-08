@@ -20,7 +20,7 @@ The links for the code are as follows:-
 7. Cham - https://www.youtube.com/watch?v=vFHzoIlW7Zs
 
 The main.cpp file is different for all hacks which are provided in the github link - https://github.com/theCuriousObserver/CS-GO-Hack.git.
-For all hacks we follow the following steps:-
+For all hacks except radar we follow the following steps:-
 
 1. Create an empty project in Visual Studio.
 2. Change the solution configuration from Debug to Release. Also change the Solution Platform from x64 to x86.
@@ -35,6 +35,8 @@ These were the general steps. Now depending on the hack we need to create a main
 For Aimbot we also need to create vector.h which is also available in Aimbot folder in github.
 
 5. After all the files are created, build the project and run the .exe file in Release folder in the project. Make sure CS GO is running.
+
+(In radar hack we don't need memory.h file. main.cpp is sufficient.)
 
 Resources :-
 
